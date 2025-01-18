@@ -1,0 +1,45 @@
+services:
+  Developer.Store.webapi:
+    container_name: store_developer_store_webapi
+    image: ${DOCKER_REGISTRY-}storedeveloperstorewebapi
+    build:
+      context: .
+      dockerfile: src/Developer.Store.WebApi/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTPS_PORTS=8081
+      - ConnectionStrings__DefaultConnection=Host=store_developer_store_database;Database=developer_store;Username=sa;Password=Pass@word
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+
+  Developer.Store.database:
+    container_name: store_developer_store_database
+    image: postgres:13
+    environment:
+      POSTGRES_DB: developer_store
+      POSTGRES_USER: sa
+      POSTGRES_PASSWORD: Pass@word
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+
+  Developer.Store.nosql:
+    container_name: store_developer_store_nosql 
+    image: mongo:8.0    
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: developer
+      MONGO_INITDB_ROOT_PASSWORD: ev@luAt10n
+    ports:
+      - "27017:27017"
+
+  Developer.Store.cache:
+    container_name: store_developer_store_cache 
+    image: redis:7.4.1-alpine     
+    command: redis-server --requirepass ev@luAt10n
+    ports:
+      - "6379:6379"
