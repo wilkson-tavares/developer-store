@@ -7,6 +7,7 @@ using AutoMapper;
 using FluentAssertions;
 using NSubstitute;
 using Xunit;
+using Developer.Store.Domain.ValueObjects;
 
 namespace Developer.Store.Unit.Application;
 
@@ -45,8 +46,8 @@ public class CreateUserHandlerTests
             Id = Guid.NewGuid(),
             Username = command.Username,
             Password = command.Password,
-            Email = command.Email,
-            Phone = command.Phone,
+            Email = new Email(command.Email),
+            Phone = new Phone(command.Phone),
             Status = command.Status,
             Role = command.Role
         };
@@ -104,8 +105,8 @@ public class CreateUserHandlerTests
             Id = Guid.NewGuid(),
             Username = command.Username,
             Password = command.Password,
-            Email = command.Email,
-            Phone = command.Phone,
+            Email = new Email(command.Email),
+            Phone = new Phone(command.Phone),
             Status = command.Status,
             Role = command.Role
         };
@@ -138,8 +139,8 @@ public class CreateUserHandlerTests
             Id = Guid.NewGuid(),
             Username = command.Username,
             Password = command.Password,
-            Email = command.Email,
-            Phone = command.Phone,
+            Email = new Email(command.Email), // Fix: Convert string to Email object
+            Phone = new Phone(command.Phone), // Fix: Convert string to Phone object
             Status = command.Status,
             Role = command.Role
         };

@@ -43,7 +43,7 @@ namespace Developer.Store.Application.Auth.AuthenticateUser
             return new AuthenticateUserResult
             {
                 Token = token,
-                Email = user.Email,
+                Email = user.Email.Value,
                 Name = user.Username,
                 Role = user.Role.ToString()
             };

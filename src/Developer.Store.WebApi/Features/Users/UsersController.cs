@@ -8,6 +8,10 @@ using Developer.Store.WebApi.Features.Users.DeleteUser;
 using Developer.Store.Application.Users.CreateUser;
 using Developer.Store.Application.Users.GetUser;
 using Developer.Store.Application.Users.DeleteUser;
+using Developer.Store.Application.Common;
+using Developer.Store.Application.Users.GetUsers;
+using Developer.Store.Application.Users.UpdateUser;
+using Developer.Store.WebApi.Features.Users.UpdateUser;
 
 namespace Developer.Store.WebApi.Features.Users;
 
@@ -57,6 +61,35 @@ public class UsersController : BaseController
             Success = true,
             Message = "User created successfully",
             Data = _mapper.Map<CreateUserResponse>(response)
+        });
+    }
+
+    /// <summary>
+    /// Retrieves a list of users with pagination and sorting
+    /// </summary>
+    /// <param name="page">Page number for pagination</param>
+    /// <param name="size">Number of items per page</param>
+    /// <param name="order">Ordering of results</param>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <returns>A paginated list of users</returns>
+    [HttpGet]
+    [ProducesResponseType(typeof(ApiResponseWithData<PagedResult<GetUsersResult>>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> GetUsers([FromQuery] int page = 1, [FromQuery] int size = 10, [FromQuery] string? order = null, CancellationToken cancellationToken = default)
+    {
+        var query = new PagedQuery<PagedResult<GetUsersResult>>(page, size, order);
+        var validator = new PagedQueryValidator<PagedResult<GetUsersResult>>();
+        var validationResult = await validator.ValidateAsync(query, cancellationToken);
+
+        if (!validationResult.IsValid)
+            return BadRequest(validationResult.Errors);
+
+        var result = await _mediator.Send(query, cancellationToken);
+        return Ok(new ApiResponseWithData<PagedResult<GetUsersResult>>
+        {
+            Success = true,
+            Message = "Users retrieved successfully",
+            Data = result
         });
     }
 
@@ -116,6 +149,35 @@ public class UsersController : BaseController
         {
             Success = true,
             Message = "User deleted successfully"
+        });
+    }
+
+    /// <summary>
+    /// Update a user by their ID
+    /// </summary>
+    /// <param name="id">The unique identifier of the user to Update</param>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <returns>Success response if the user was Updated</returns>
+    [HttpDelete("{id}")]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> UpdateUser([FromRoute] Guid id, CancellationToken cancellationToken)
+    {
+        var request = new UpdateUserRequest { Id = id };
+        var validator = new UpdateUserRequestValidator();
+        var validationResult = await validator.ValidateAsync(request, cancellationToken);
+
+        if (!validationResult.IsValid)
+            return BadRequest(validationResult.Errors);
+
+        var command = _mapper.Map<UpdateUserCommand>(request.Id);
+        await _mediator.Send(command, cancellationToken);
+
+        return Ok(new ApiResponse
+        {
+            Success = true,
+            Message = "User updated successfully"
         });
     }
 }
