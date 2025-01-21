@@ -15,15 +15,22 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
     {
         builder.ToTable("Products");
 
-        builder.HasKey(p => p.ProductId);
-        builder.Property(p => p.ProductId).IsRequired();
+        builder.HasKey(p => p.Id);
+        builder.Property(p => p.Id).IsRequired();
 
-        builder.Property(p => p.Name).IsRequired().HasMaxLength(100);
-        builder.Property(p => p.Quantity).IsRequired();
-        builder.Property(p => p.UnitPrice).IsRequired().HasColumnType("decimal(18,2)");
-        builder.Property(p => p.Discount).IsRequired().HasColumnType("decimal(18,2)");
-        builder.Property(p => p.TotalAmount).IsRequired().HasColumnType("decimal(18,2)");
+        builder.Property(p => p.Title).IsRequired().HasMaxLength(100);
+        builder.Property(p => p.Description).HasMaxLength(500);
+        builder.Property(p => p.Price).IsRequired().HasColumnType("decimal(18,2)");
+        builder.Property(p => p.Category).IsRequired().HasMaxLength(50);
+        builder.Property(p => p.Image).HasMaxLength(255);
+
+        builder.OwnsOne(p => p.Rating, rating =>
+        {
+            rating.Property(r => r.Rate).IsRequired().HasColumnType("decimal(3,2)");
+            rating.Property(r => r.Count).IsRequired();
+        });
 
         builder.Property(p => p.CreatedAt).IsRequired();
+        builder.Property(p => p.UpdatedAt);
     }
 }
