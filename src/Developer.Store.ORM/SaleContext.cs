@@ -13,7 +13,6 @@ namespace Developer.Store.ORM;
 
 public class SalesContext : DbContext
 {
-    public DbSet<Sale> Sales { get; set; }
     public DbSet<Product> Products { get; set; }
 
     public SalesContext(DbContextOptions<SalesContext> options) : base(options)

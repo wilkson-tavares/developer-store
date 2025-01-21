@@ -12,25 +12,25 @@ namespace Developer.Store.Domain.Validation
     {
         public ProductValidator()
         {
-            RuleFor(product => product.ProductId)
-                .GreaterThan(0)
-                .WithMessage("Product ID must be greater than 0.");
+            RuleFor(product => product.Title)
+                .NotEmpty().WithMessage("Product title cannot be empty.")
+                .MaximumLength(100).WithMessage("Product title cannot be longer than 100 characters.");
 
-            RuleFor(product => product.Name)
-                .NotEmpty()
-                .WithMessage("Product name must not be empty.");
+            RuleFor(product => product.Description)
+                .MaximumLength(500).WithMessage("Product description cannot be longer than 500 characters.");
 
-            RuleFor(product => product.Quantity)
-                .GreaterThan(0)
-                .WithMessage("Product quantity must be greater than 0.");
+            RuleFor(product => product.Price)
+                .GreaterThan(0).WithMessage("Product price must be greater than zero.");
 
-            RuleFor(product => product.UnitPrice)
-                .GreaterThan(0)
-                .WithMessage("Product unit price must be greater than 0.");
+            RuleFor(product => product.Category)
+                .NotEmpty().WithMessage("Product category cannot be empty.");
 
-            RuleFor(product => product.Discount)
-                .GreaterThanOrEqualTo(0)
-                .WithMessage("Product discount must be greater than or equal to 0.");
+            RuleFor(product => product.Rating)
+                .NotNull().WithMessage("Product rating cannot be null.")
+                .Must(rating => rating.Rate >= 0 && rating.Rate <= 5)
+                .WithMessage("Product rating rate must be between 0 and 5.")
+                .Must(rating => rating.Count >= 0)
+                .WithMessage("Product rating count must be a non-negative integer.");
         }
     }
 }

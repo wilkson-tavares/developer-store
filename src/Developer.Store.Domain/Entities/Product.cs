@@ -7,23 +7,65 @@ using Developer.Store.Common.Validation;
 using Developer.Store.Domain.Common;
 using Developer.Store.Domain.Interfaces;
 using Developer.Store.Domain.Validation;
+using Developer.Store.Domain.ValueObjects;
 
 namespace Developer.Store.Domain.Entities
 {
     public class Product : BaseEntity, IProduct
     {
-        public int ProductId { get; set; }
-        public string Name { get; set; } = string.Empty;
-        public int Quantity { get; set; }
-        public decimal UnitPrice { get; set; }
-        public decimal Discount { get; set; }
-        public decimal TotalAmount { get; set; }
+        /// <summary>
+        /// Gets the product's title.
+        /// Must not be null or empty.
+        /// </summary>
+        public string Title { get; set; } = string.Empty;
 
-        public void CalculateTotalAmount()
+        /// <summary>
+        /// Gets the product's description.
+        /// </summary>
+        public string Description { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Gets the product's price.
+        /// Must be a positive value.
+        /// </summary>
+        public decimal Price { get; set; }
+
+        /// <summary>
+        /// Gets the product's category.
+        /// </summary>
+        public string Category { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Gets the product's image.
+        /// </summary>
+        public string Image { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Gets the product's rating.
+        /// </summary>
+        public Rating Rating { get; set; }
+
+        /// <summary>
+        /// Gets the date and time of the last update to the product's information.
+        /// </summary>
+        public DateTime? UpdatedAt { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the Product class.
+        /// </summary>
+        public Product()
         {
-            TotalAmount = (UnitPrice * Quantity) - Discount;
+            CreatedAt = DateTime.UtcNow;
         }
 
+        /// <summary>
+        /// Performs validation of the product entity using the ProductValidator rules.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="ValidationResultDetail"/> containing:
+        /// - IsValid: Indicates whether all validation rules passed
+        /// - Errors: Collection of validation errors if any rules failed
+        /// </returns>
         public ValidationResultDetail Validate()
         {
             var validator = new ProductValidator();
