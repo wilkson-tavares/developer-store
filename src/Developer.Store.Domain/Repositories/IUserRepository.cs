@@ -16,6 +16,16 @@ public interface IUserRepository
     Task<User> CreateAsync(User user, CancellationToken cancellationToken = default);
 
     /// <summary>
+    /// Retrieves a list of users with pagination and sorting
+    /// </summary>
+    /// <param name="page">Page number for pagination</param>
+    /// <param name="size">Number of items per page</param>
+    /// <param name="order">Ordering of results</param>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <returns>A list of users</returns>
+    Task<(IEnumerable<User> Users, int TotalItems)> GetUsersAsync(int page = 1, int size = 10, string? order = null, CancellationToken cancellationToken = default);
+
+    /// <summary>
     /// Retrieves a user by their unique identifier
     /// </summary>
     /// <param name="id">The unique identifier of the user</param>
@@ -38,4 +48,12 @@ public interface IUserRepository
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>True if the user was deleted, false if not found</returns>
     Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Updates an existing user in the database
+    /// </summary>
+    /// <param name="id">The unique identifier of the user to delete</param>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <returns>The updated user</returns>
+    Task<bool> UpdateAsync(Guid id, CancellationToken cancellationToken = default);
 }

@@ -3,6 +3,7 @@ using Developer.Store.Common.Validation;
 using Developer.Store.Domain.Common;
 using Developer.Store.Domain.Enums;
 using Developer.Store.Domain.Validation;
+using Developer.Store.Domain.ValueObjects;
 
 namespace Developer.Store.Domain.Entities;
 
@@ -13,8 +14,15 @@ namespace Developer.Store.Domain.Entities;
 /// </summary>
 public class User : BaseEntity, IUser
 {
+
     /// <summary>
     /// Gets the user's full name.
+    /// Must not be null or empty and should contain both first and last names.
+    /// </summary>
+    public Name Name { get; private set; }
+
+    /// <summary>
+    /// Gets the user's full Username.
     /// Must not be null or empty and should contain both first and last names.
     /// </summary>
     public string Username { get; set; } = string.Empty;
@@ -23,13 +31,13 @@ public class User : BaseEntity, IUser
     /// Gets the user's email address.
     /// Must be a valid email format and is used as a unique identifier for authentication.
     /// </summary>
-    public string Email { get; set; } = string.Empty;
+    public Email Email { get; set; }
 
     /// <summary>
     /// Gets the user's phone number.
     /// Must be a valid phone number format following the pattern (XX) XXXXX-XXXX.
     /// </summary>
-    public string Phone { get; set; } = string.Empty ;
+    public Phone Phone { get; set; }
 
     /// <summary>
     /// Gets the hashed password for authentication.
@@ -54,6 +62,11 @@ public class User : BaseEntity, IUser
     /// Gets the date and time of the last update to the user's information.
     /// </summary>
     public DateTime? UpdatedAt { get; set; }
+
+    /// <summary>
+    /// Gets the user's address.
+    /// </summary>
+    public Address Address { get; set; }
 
     /// <summary>
     /// Gets the unique identifier of the user.

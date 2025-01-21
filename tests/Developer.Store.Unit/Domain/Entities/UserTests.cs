@@ -1,5 +1,6 @@
 using Developer.Store.Domain.Entities;
 using Developer.Store.Domain.Enums;
+using Developer.Store.Domain.ValueObjects;
 using Developer.Store.Unit.Domain.Entities.TestData;
 using Xunit;
 
@@ -73,8 +74,8 @@ public class UserTests
         {
             Username = "", // Invalid: empty
             Password = UserTestData.GenerateInvalidPassword(), // Invalid: doesn't meet password requirements
-            Email = UserTestData.GenerateInvalidEmail(), // Invalid: not a valid email
-            Phone = UserTestData.GenerateInvalidPhone(), // Invalid: doesn't match pattern
+            Email = new Email(UserTestData.GenerateInvalidEmail()), // Invalid: not a valid email
+            Phone = new Phone(UserTestData.GenerateInvalidPhone()), // Invalid: doesn't match pattern
             Status = UserStatus.Unknown, // Invalid: cannot be Unknown
             Role = UserRole.None // Invalid: cannot be None
         };

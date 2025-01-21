@@ -1,6 +1,7 @@
 using Developer.Store.Domain.Entities;
 using Developer.Store.Domain.Enums;
 using Bogus;
+using Developer.Store.Domain.ValueObjects;
 
 namespace Developer.Store.Unit.Domain.Entities.TestData;
 
@@ -24,8 +25,8 @@ public static class UserTestData
     private static readonly Faker<User> UserFaker = new Faker<User>()
         .RuleFor(u => u.Username, f => f.Internet.UserName())
         .RuleFor(u => u.Password, f => $"Test@{f.Random.Number(100, 999)}")
-        .RuleFor(u => u.Email, f => f.Internet.Email())
-        .RuleFor(u => u.Phone, f => $"+55{f.Random.Number(11, 99)}{f.Random.Number(100000000, 999999999)}")
+        .RuleFor(u => u.Email, f => new Email(f.Internet.Email()))
+        .RuleFor(u => u.Phone, f => new Phone($"+55{f.Random.Number(11, 99)}{f.Random.Number(100000000, 999999999)}"))
         .RuleFor(u => u.Status, f => f.PickRandom(UserStatus.Active, UserStatus.Suspended))
         .RuleFor(u => u.Role, f => f.PickRandom(UserRole.Customer, UserRole.Admin));
 

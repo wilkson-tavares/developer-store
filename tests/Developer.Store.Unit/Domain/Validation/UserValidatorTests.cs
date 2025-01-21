@@ -1,5 +1,6 @@
 using Developer.Store.Domain.Enums;
 using Developer.Store.Domain.Validation;
+using Developer.Store.Domain.ValueObjects;
 using Developer.Store.Unit.Domain.Entities.TestData;
 using FluentValidation.TestHelper;
 using Xunit;
@@ -103,7 +104,7 @@ public class UserValidatorTests
     {
         // Arrange
         var user = UserTestData.GenerateValidUser();
-        user.Email = UserTestData.GenerateInvalidEmail();
+        user.Email = new Email(UserTestData.GenerateInvalidEmail());
 
         // Act
         var result = _validator.TestValidate(user);
@@ -151,7 +152,7 @@ public class UserValidatorTests
     {
         // Arrange
         var user = UserTestData.GenerateValidUser();
-        user.Phone = UserTestData.GenerateInvalidPhone();
+        user.Phone = new Phone(UserTestData.GenerateInvalidPhone());
 
         // Act
         var result = _validator.TestValidate(user);
