@@ -11,7 +11,7 @@ namespace Developer.Store.Application.Products.GetProduct
     /// <summary>
     /// Command for retrieving a Product by their ID
     /// </summary>
-    public record GetProductByCategoryCommand : IRequest<GetProductByCategoryResult>
+    public record GetProductCommand : IRequest<GetProductByCategoryResult>
     {
         /// <summary>
         /// The unique identifier of the Product to retrieve
@@ -22,7 +22,7 @@ namespace Developer.Store.Application.Products.GetProduct
         /// Initializes a new instance of GetProductCommand
         /// </summary>
         /// <param name="id">The ID of the Product to retrieve</param>
-        public GetProductByCategoryCommand(Guid id)
+        public GetProductCommand(Guid id)
         {
             Id = id;
         }
