@@ -10,19 +10,16 @@ namespace Developer.Store.Domain.Interfaces
 {
     public interface IProduct
     {
-        public interface IProduct
-        {
-            Guid Id { get; }
-            string Title { get; }
-            string Description { get; }
-            decimal Price { get; }
-            string Category { get; }
-            string Image { get; }
-            Rating Rating { get; }
-            DateTime? UpdatedAt { get; }
-            DateTime CreatedAt { get; }
+        Guid Id { get; }
+        string Title { get; }
+        string Description { get; }
+        decimal Price { get; }
+        string Category { get; }
+        string Image { get; }
+        Rating Rating { get; }
+        DateTime? UpdatedAt { get; }
+        DateTime CreatedAt { get; }
 
-            ValidationResultDetail Validate();
-        }
+        ValidationResultDetail Validate();
     }
 }
