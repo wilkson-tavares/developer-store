@@ -19,7 +19,5 @@ namespace Developer.Store.Domain.Interfaces
         Rating Rating { get; }
         DateTime? UpdatedAt { get; }
         DateTime CreatedAt { get; }
-
-        ValidationResultDetail Validate();
     }
 }

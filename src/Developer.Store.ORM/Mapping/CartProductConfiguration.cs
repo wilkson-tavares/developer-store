@@ -15,7 +15,6 @@ namespace Developer.Store.ORM.Mapping
         {
             builder.ToTable("CartProducts");
 
-            builder.HasKey(cp => new { cp.Id, cp.Id });
             builder.Property(cp => cp.Product.Id).IsRequired();
             builder.Property(cp => cp.Id).IsRequired();
             builder.Property(cp => cp.Quantity).IsRequired();
