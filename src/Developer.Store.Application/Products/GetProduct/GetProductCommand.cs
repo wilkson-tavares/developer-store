@@ -11,7 +11,7 @@ namespace Developer.Store.Application.Products.GetProduct
     /// <summary>
     /// Command for retrieving a Product by their ID
     /// </summary>
-    public record GetProductCommand : IRequest<GetProductByCategoryResult>
+    public record GetProductCommand : IRequest<GetProductResult>
     {
         /// <summary>
         /// The unique identifier of the Product to retrieve

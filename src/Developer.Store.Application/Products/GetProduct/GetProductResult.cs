@@ -10,7 +10,7 @@ namespace Developer.Store.Application.Products.GetProduct
     /// <summary>
     /// Response model for GetProduct operation
     /// </summary>
-    public class GetProductByCategoryResult
+    public class GetProductResult
     {
         /// <summary>
         /// Gets or sets the title of the product to be created.

@@ -12,14 +12,14 @@ namespace Developer.Store.Application.Products.GetProduct
     /// <summary>
     /// Profile for mapping between Product entity and GetProductResult
     /// </summary>
-    public class GetProductByCategoryProfile : Profile
+    public class GetProductProfile : Profile
     {
         /// <summary>
         /// Initializes the mappings for GetProduct operation
         /// </summary>
-        public GetProductByCategoryProfile()
+        public GetProductProfile()
         {
-            CreateMap<Product, GetProductByCategoryResult>();
+            CreateMap<Product, GetProductResult>();
         }
     }
 }

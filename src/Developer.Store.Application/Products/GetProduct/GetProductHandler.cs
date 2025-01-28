@@ -14,7 +14,7 @@ namespace Developer.Store.Application.Products.GetProduct
     /// <summary>
     /// Handler for processing GetProductCommand requests
     /// </summary>
-    public class GetProductByCategoryHandler : IRequestHandler<GetProductByCategoryCommand, GetProductByCategoryResult>
+    public class GetProductByCategoryHandler : IRequestHandler<GetProductCommand, GetProductResult>
     {
         private readonly IProductRepository _ProductRepository;
         private readonly IMapper _mapper;
@@ -39,9 +39,9 @@ namespace Developer.Store.Application.Products.GetProduct
         /// <param name="request">The GetProduct command</param>
         /// <param name="cancellationToken">Cancellation token</param>
         /// <returns>The Product details if found</returns>
-        public async Task<GetProductByCategoryResult> Handle(GetProductByCategoryCommand request, CancellationToken cancellationToken)
+        public async Task<GetProductResult> Handle(GetProductCommand request, CancellationToken cancellationToken)
         {
-            var validator = new GetProductByCategoryValidator();
+            var validator = new GetProductValidator();
             var validationResult = await validator.ValidateAsync(request, cancellationToken);
 
             if (!validationResult.IsValid)
@@ -51,7 +51,7 @@ namespace Developer.Store.Application.Products.GetProduct
             if (Product == null)
                 throw new KeyNotFoundException($"Product with ID {request.Id} not found");
 
-            return _mapper.Map<GetProductByCategoryResult>(Product);
+            return _mapper.Map<GetProductResult>(Product);
         }
     }
 }

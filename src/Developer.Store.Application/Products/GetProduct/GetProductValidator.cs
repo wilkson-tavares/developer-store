@@ -11,12 +11,12 @@ namespace Developer.Store.Application.Products.GetProduct
     /// <summary>
     /// Validator for GetProductCommand
     /// </summary>
-    public class GetProductByCategoryValidator : AbstractValidator<GetProductByCategoryCommand>
+    public class GetProductValidator : AbstractValidator<GetProductCommand>
     {
         /// <summary>
         /// Initializes validation rules for GetProductCommand
         /// </summary>
-        public GetProductByCategoryValidator()
+        public GetProductValidator()
         {
             RuleFor(x => x.Id)
                 .NotEmpty()
